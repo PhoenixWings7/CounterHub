@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Counter Hub</string>
+
+    <!--    Content descriptions    -->
+    <string name="cd_add_counter">Add new counter</string>
+    <string name="cd_delete_counter">Delete counter</string>
+    <string name="cd_decrease_counter">Decrease counter</string>
+    <string name="cd_increase_counter">Increase counter</string>
+
+    <!--    Labels  -->
+    <string name="lbl_new_counter">New counter</string>
+    <string name="lbl_counter_name">Counter name</string>
+
+    <!--    Buttons  -->
+    <string name="btn_confirm">Confirm</string>
+</resources>
