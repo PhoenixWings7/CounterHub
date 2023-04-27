@@ -171,17 +171,22 @@ fun AddCounterFab(onAddNewCounter: () -> Unit) {
 @Composable
 @ExperimentalMaterial3Api
 fun DefaultPreview() {
+    val isDialogOpen = rememberSaveable { mutableStateOf(false) }
+    val counters = rememberSaveable { mutableStateOf(listOf<Counter>()) }
     CounterHubTheme {
         MainContent(
-            rememberUpdatedState(newValue = listOf()),
-            { _, _ -> },
-            {},
-            {},
-            {},
-            {},
-            rememberUpdatedState(
-                newValue = false
-            )
+            counters = counters,
+            onCountChanged = { _, _ -> },
+            onCounterRemoved = {},
+            onAddNewCounter = { isDialogOpen.value = true },
+            onCloseNewCounterDialog = { isDialogOpen.value = false },
+            addCounter = {
+                val currentCounters = counters.value
+                val newCounters = currentCounters.toMutableList()
+                newCounters.add(Counter(1, it, 0))
+                counters.value = newCounters
+            },
+            isNewCounterDialogOpen = isDialogOpen
         )
     }
 }
