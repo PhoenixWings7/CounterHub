@@ -1,4 +1,4 @@
-package com.kadamus.counterhub.domain
+package com.kadamus.counterhub.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

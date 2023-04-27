@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kadamus.counterhub.R
-import com.kadamus.counterhub.domain.Counter
+import com.kadamus.counterhub.domain.model.Counter
 import com.kadamus.counterhub.presentation.counters.SimpleCounter
 import com.kadamus.counterhub.presentation.ui.theme.CounterHubTheme
 

@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kadamus.counterhub.R
-import com.kadamus.counterhub.domain.Counter
+import com.kadamus.counterhub.domain.model.Counter
 import com.kadamus.counterhub.presentation.ui.theme.CounterHubTheme
 
 @Composable
