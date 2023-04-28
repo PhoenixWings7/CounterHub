@@ -23,7 +23,9 @@ import com.kadamus.counterhub.R
 import com.kadamus.counterhub.domain.model.Counter
 import com.kadamus.counterhub.presentation.counters.SimpleCounter
 import com.kadamus.counterhub.presentation.ui.theme.CounterHubTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
 
