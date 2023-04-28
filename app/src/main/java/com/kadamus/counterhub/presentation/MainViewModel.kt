@@ -7,6 +7,7 @@ import com.kadamus.counterhub.domain.model.Counter
 import com.kadamus.counterhub.domain.use_case.AddCounter
 import com.kadamus.counterhub.domain.use_case.DeleteCounter
 import com.kadamus.counterhub.domain.use_case.GetCounters
+import com.kadamus.counterhub.exceptions.CounterAppException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,6 +21,10 @@ class MainViewModel @Inject constructor(
     private val deleteCounter: DeleteCounter
 ) : ViewModel() {
 
+    private companion object {
+        const val LOG_TAG = "CounterHub -> MainViewModel"
+    }
+
     private val _isNewCounterDialogOpen: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isNewCounterDialogOpen: StateFlow<Boolean> = _isNewCounterDialogOpen
     private val _counters: MutableStateFlow<List<Counter>> = MutableStateFlow(listOf())
@@ -29,7 +34,6 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             getCounters().collect {
                 _counters.emit(it)
-                Log.i("counters:", it.toString())
             }
         }
     }
@@ -45,7 +49,11 @@ class MainViewModel @Inject constructor(
 
     fun addNewCounter(title: String) {
         viewModelScope.launch {
-            addCounter(title)
+            try {
+                addCounter(title)
+            } catch (e: CounterAppException) {
+                Log.e(LOG_TAG, e.message ?: e.uiMessage)
+            }
         }
     }
 

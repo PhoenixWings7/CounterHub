@@ -16,6 +16,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -92,6 +93,8 @@ private fun TitleInputDialog(
     addCounter: (title: String) -> Unit
 ) {
     var titleText by rememberSaveable { mutableStateOf("") }
+    var isTitleValid by rememberSaveable { mutableStateOf(true) }
+
     AlertDialog(
         onDismissRequest = {
             onCloseNewCounterDialog()
@@ -99,8 +102,12 @@ private fun TitleInputDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    onCloseNewCounterDialog()
-                    addCounter(titleText)
+                    if (titleText.isNotBlank()) {
+                        onCloseNewCounterDialog()
+                        addCounter(titleText)
+                    } else {
+                        isTitleValid = false
+                    }
                 }
             ) {
                 Text(text = stringResource(id = R.string.btn_confirm))
@@ -110,7 +117,18 @@ private fun TitleInputDialog(
             OutlinedTextField(
                 value = titleText,
                 onValueChange = { titleText = it },
-                label = { Text(text = stringResource(id = R.string.lbl_counter_name)) }
+                label = { Text(text = stringResource(id = R.string.lbl_counter_name)) },
+                isError = isTitleValid.not(),
+                supportingText = {
+                    if (isTitleValid.not()) {
+                        Text(
+                            text = "Title can't be blank!",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    } else {
+                        Text("Type your title above.", color = Color.Transparent)
+                    }
+                }
             )
         },
         title = {
