@@ -7,6 +7,7 @@ import com.kadamus.counterhub.data.CounterRepositoryImpl
 import com.kadamus.counterhub.data.local_source.CounterDao
 import com.kadamus.counterhub.data.local_source.LocalDatabase
 import com.kadamus.counterhub.domain.use_case.AddCounter
+import com.kadamus.counterhub.domain.use_case.DeleteCounter
 import com.kadamus.counterhub.domain.use_case.GetCounters
 import dagger.Module
 import dagger.Provides
@@ -43,4 +44,9 @@ object DatabaseModule {
     @Singleton
     fun provideAddCounterUseCase(counterRepository: CounterRepository): AddCounter =
         AddCounter(counterRepository)
+
+    @Provides
+    @Singleton
+    fun provideDeleteCounterUseCase(counterRepository: CounterRepository): DeleteCounter =
+        DeleteCounter(counterRepository)
 }

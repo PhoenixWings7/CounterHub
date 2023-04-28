@@ -13,4 +13,8 @@ class CounterRepositoryImpl(private val counterDao: CounterDao): CounterReposito
         counterDao.addCounter(counter)
     }
 
+    override suspend fun deleteCounterById(counterId: Int) {
+        counterDao.deleteCounter(counterId)
+    }
+
 }

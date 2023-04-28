@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kadamus.counterhub.domain.model.Counter
 import com.kadamus.counterhub.domain.use_case.AddCounter
+import com.kadamus.counterhub.domain.use_case.DeleteCounter
 import com.kadamus.counterhub.domain.use_case.GetCounters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getCounters: GetCounters,
-    private val addCounter: AddCounter
+    private val addCounter: AddCounter,
+    private val deleteCounter: DeleteCounter
 ) : ViewModel() {
 
     private val _isNewCounterDialogOpen: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -51,5 +53,9 @@ class MainViewModel @Inject constructor(
         // TODO
     }
 
-    fun onCounterRemoved(counterId: Int) {}
+    fun onCounterRemoved(counterId: Int) {
+        viewModelScope.launch {
+            deleteCounter(counterId)
+        }
+    }
 }
