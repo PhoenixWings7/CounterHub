@@ -10,6 +10,7 @@ import com.kadamus.counterhub.domain.use_case.GetCounters
 import com.kadamus.counterhub.domain.use_case.IncrementCounter
 import com.kadamus.counterhub.exceptions.CounterAppException
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -60,7 +61,9 @@ class MainViewModel @Inject constructor(
     }
 
     fun onCountChanged(counterId: Int, num: Int) {
-        // TODO
+        viewModelScope.launch(Dispatchers.IO) {
+            incrementCounter(counterId, num)
+        }
     }
 
     fun onCounterRemoved(counterId: Int) {
