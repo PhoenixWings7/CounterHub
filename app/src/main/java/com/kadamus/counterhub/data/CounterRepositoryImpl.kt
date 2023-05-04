@@ -20,4 +20,8 @@ class CounterRepositoryImpl(private val counterDao: CounterDao): CounterReposito
     override suspend fun incrementCounterWithId(id: Int, incrementBy: Int) {
         counterDao.incrementCounter(id, incrementBy)
     }
+
+    override suspend fun updateCounter(counter: Counter) {
+        counterDao.updateCounter(counter)
+    }
 }

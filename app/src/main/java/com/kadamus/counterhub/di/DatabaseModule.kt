@@ -6,10 +6,7 @@ import com.kadamus.counterhub.data.CounterRepository
 import com.kadamus.counterhub.data.CounterRepositoryImpl
 import com.kadamus.counterhub.data.local_source.CounterDao
 import com.kadamus.counterhub.data.local_source.LocalDatabase
-import com.kadamus.counterhub.domain.use_case.AddCounter
-import com.kadamus.counterhub.domain.use_case.DeleteCounter
-import com.kadamus.counterhub.domain.use_case.GetCounters
-import com.kadamus.counterhub.domain.use_case.IncrementCounter
+import com.kadamus.counterhub.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,4 +52,9 @@ object DatabaseModule {
     @Singleton
     fun provideIncrementCounterUseCase(counterRepository: CounterRepository): IncrementCounter =
         IncrementCounter(counterRepository)
+
+    @Provides
+    @Singleton
+    fun provideUpdateCounterUseCase(counterRepository: CounterRepository): UpdateCounter =
+        UpdateCounter(counterRepository)
 }

@@ -1,9 +1,6 @@
 package com.kadamus.counterhub.data.local_source
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.kadamus.counterhub.domain.model.Counter
 import kotlinx.coroutines.flow.Flow
 
@@ -20,4 +17,7 @@ interface CounterDao {
 
     @Query("UPDATE counters SET count = count + :incrementBy WHERE id=:counterId")
     suspend fun incrementCounter(counterId: Int, incrementBy: Int = 1)
+
+    @Update(entity = Counter::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateCounter(counter: Counter)
 }

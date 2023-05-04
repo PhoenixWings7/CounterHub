@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kadamus.counterhub.domain.model.Counter
-import com.kadamus.counterhub.domain.use_case.AddCounter
-import com.kadamus.counterhub.domain.use_case.DeleteCounter
-import com.kadamus.counterhub.domain.use_case.GetCounters
-import com.kadamus.counterhub.domain.use_case.IncrementCounter
+import com.kadamus.counterhub.domain.use_case.*
 import com.kadamus.counterhub.exceptions.CounterAppException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +18,8 @@ class MainViewModel @Inject constructor(
     private val getCounters: GetCounters,
     private val addCounter: AddCounter,
     private val deleteCounter: DeleteCounter,
-    private val incrementCounter: IncrementCounter
+    private val incrementCounter: IncrementCounter,
+    private val updateCounter: UpdateCounter
 ) : ViewModel() {
 
     private companion object {

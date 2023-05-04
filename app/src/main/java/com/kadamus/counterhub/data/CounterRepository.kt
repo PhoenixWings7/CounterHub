@@ -8,4 +8,5 @@ interface CounterRepository {
     suspend fun addCounter(counter: Counter)
     suspend fun deleteCounterById(id: Int)
     suspend fun incrementCounterWithId(id: Int, incrementBy: Int = 1)
+    suspend fun updateCounter(counter: Counter)
 }
