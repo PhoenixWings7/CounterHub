@@ -7,4 +7,5 @@ interface CounterRepository {
     fun getAllCounters(): Flow<List<Counter>>
     suspend fun addCounter(counter: Counter)
     suspend fun deleteCounterById(id: Int)
+    suspend fun incrementCounterWithId(id: Int, incrementBy: Int = 1)
 }

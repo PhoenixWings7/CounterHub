@@ -7,6 +7,7 @@ import com.kadamus.counterhub.domain.model.Counter
 import com.kadamus.counterhub.domain.use_case.AddCounter
 import com.kadamus.counterhub.domain.use_case.DeleteCounter
 import com.kadamus.counterhub.domain.use_case.GetCounters
+import com.kadamus.counterhub.domain.use_case.IncrementCounter
 import com.kadamus.counterhub.exceptions.CounterAppException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getCounters: GetCounters,
     private val addCounter: AddCounter,
-    private val deleteCounter: DeleteCounter
+    private val deleteCounter: DeleteCounter,
+    private val incrementCounter: IncrementCounter
 ) : ViewModel() {
 
     private companion object {

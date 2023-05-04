@@ -17,4 +17,7 @@ interface CounterDao {
 
     @Query("DELETE FROM counters WHERE id=:counterId")
     suspend fun deleteCounter(counterId: Int)
+
+    @Query("UPDATE counters SET count = count + :incrementBy WHERE id=:counterId")
+    suspend fun incrementCounter(counterId: Int, incrementBy: Int = 1)
 }
