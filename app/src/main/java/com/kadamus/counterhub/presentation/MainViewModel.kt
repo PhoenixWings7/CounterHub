@@ -58,6 +58,13 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun onTitleChanged(counter: Counter, newTitle: String) {
+        counter.title = newTitle
+        viewModelScope.launch(Dispatchers.IO) {
+            updateCounter(counter)
+        }
+    }
+
     fun onCountChanged(counterId: Int, num: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             incrementCounter(counterId, num)

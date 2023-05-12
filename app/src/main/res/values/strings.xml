@@ -6,6 +6,7 @@
     <string name="cd_delete_counter">Delete counter</string>
     <string name="cd_decrease_counter">Decrease counter</string>
     <string name="cd_increase_counter">Increase counter</string>
+    <string name="cd_save">Save</string>
 
     <!--    Labels  -->
     <string name="lbl_new_counter">New counter</string>

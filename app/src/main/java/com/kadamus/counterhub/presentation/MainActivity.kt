@@ -39,12 +39,13 @@ class MainActivity : ComponentActivity() {
                 viewModel.isNewCounterDialogOpen.collectAsStateWithLifecycle()
             MainContent(
                 counters = counters,
+                onCountChanged = viewModel::onCountChanged,
+                onCounterTitleChanged = viewModel::onTitleChanged,
                 onAddNewCounter = viewModel::onAddNewCounter,
                 onCloseNewCounterDialog = viewModel::closeNewCounterDialog,
-                onCountChanged = viewModel::onCountChanged,
-                onCounterRemoved = viewModel::onCounterRemoved,
                 addCounter = viewModel::addNewCounter,
-                isNewCounterDialogOpen = isNewCounterDialogOpen
+                isNewCounterDialogOpen = isNewCounterDialogOpen,
+                onCounterRemoved = viewModel::onCounterRemoved
             )
         }
     }
@@ -55,11 +56,12 @@ class MainActivity : ComponentActivity() {
 private fun MainContent(
     counters: State<List<Counter>>,
     onCountChanged: (counterId: Int, num: Int) -> Unit,
-    onCounterRemoved: (counterId: Int) -> Unit,
+    onCounterTitleChanged: (counter: Counter, newTitle: String) -> Unit,
     onAddNewCounter: () -> Unit,
     onCloseNewCounterDialog: () -> Unit,
     addCounter: (title: String) -> Unit,
-    isNewCounterDialogOpen: State<Boolean>
+    isNewCounterDialogOpen: State<Boolean>,
+    onCounterRemoved: (counterId: Int) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -76,7 +78,8 @@ private fun MainContent(
                     paddingVals,
                     counters,
                     onCountChanged,
-                    onCounterRemoved
+                    onCounterRemoved,
+                    onCounterTitleChanged
                 )
             }
         }
@@ -154,11 +157,13 @@ fun AppBarActions() {
 }
 
 @Composable
+@ExperimentalMaterial3Api
 fun CountersColumn(
     paddingValues: PaddingValues,
     counters: State<List<Counter>>,
     onCountChanged: (counterId: Int, num: Int) -> Unit,
-    onCounterRemoved: (counterId: Int) -> Unit
+    onCounterRemoved: (counterId: Int) -> Unit,
+    onTitleChanged: (counter: Counter, newTitle: String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -168,7 +173,8 @@ fun CountersColumn(
             SimpleCounter(
                 counter = counter,
                 onCountChanged = onCountChanged,
-                onCounterRemoved = onCounterRemoved
+                onCounterRemoved = onCounterRemoved,
+                onTitleChanged = onTitleChanged
             )
         }
     }
@@ -197,7 +203,7 @@ fun DefaultPreview() {
         MainContent(
             counters = counters,
             onCountChanged = { _, _ -> },
-            onCounterRemoved = {},
+            onCounterTitleChanged = { _, _ -> },
             onAddNewCounter = { isDialogOpen.value = true },
             onCloseNewCounterDialog = { isDialogOpen.value = false },
             addCounter = {
@@ -207,7 +213,7 @@ fun DefaultPreview() {
                 counters.value = newCounters
             },
             isNewCounterDialogOpen = isDialogOpen
-        )
+        ) {}
     }
 }
 
