@@ -67,7 +67,7 @@ private fun MainContent(
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(R.string.app_name)) },
-                actions = { AppBarActions() },
+                actions = { AppBarActions(onAddNewCounter) },
                 colors = TopAppBarDefaults.smallTopAppBarColors()
             )
         },
@@ -144,8 +144,8 @@ private fun TitleInputDialog(
 }
 
 @Composable
-fun AppBarActions() {
-    IconButton(onClick = { /*TODO*/ }) {
+fun AppBarActions(onAddNewCounter: () -> Unit) {
+    IconButton(onClick = { onAddNewCounter() }) {
         Icon(
             imageVector = Icons.Outlined.Add,
             contentDescription = stringResource(id = R.string.cd_add_counter)
