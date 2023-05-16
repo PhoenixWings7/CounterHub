@@ -89,6 +89,12 @@ private fun MainContent(
     }
 }
 
+/**
+ * An AlertDialog taking user input: a non-empty title for a new counter.
+ *
+ * @param onCloseNewCounterDialog A function called when this dialog is dismissed or confirmed.
+ * @param addCounter A function called when the title is not empty and the confirm button has been clicked.
+ */
 @ExperimentalMaterial3Api
 @Composable
 private fun TitleInputDialog(

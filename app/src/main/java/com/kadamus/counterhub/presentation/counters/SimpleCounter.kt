@@ -20,6 +20,16 @@ import com.kadamus.counterhub.R
 import com.kadamus.counterhub.domain.model.Counter
 import com.kadamus.counterhub.presentation.ui.theme.CounterHubTheme
 
+/**
+ * A basic counter with editable title.
+ *
+ * @param counter The counter to be displayed.
+ * @param onCountChanged A function to be invoked when the count is being adjusted. Passes counter id
+ *      & a number to be added to the count (can be a negative number).
+ * @param onCounterRemoved A function to be invoked when user wants to delete the counter.
+ * @param onTitleChanged A function to be invoked when user wants to save the new counter title.
+ *      Passes the counter in its unchanged form & the new title.
+ */
 @Composable
 @ExperimentalMaterial3Api
 fun SimpleCounter(
@@ -35,17 +45,15 @@ fun SimpleCounter(
     ) {
         Column(modifier = Modifier.padding(12.dp, 0.dp, 12.dp, 16.dp)) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 var titleText by rememberSaveable { mutableStateOf(counter.title) }
-                var isTitleInEdit by rememberSaveable {
-                    mutableStateOf(false)
-                }
+                var isTitleInEdit by rememberSaveable { mutableStateOf(false) }
                 val focusManager = LocalFocusManager.current
                 val focusRequester = remember { FocusRequester() }
+
                 BasicTextField(
                     value = titleText,
                     onValueChange = { titleText = it },
@@ -58,7 +66,9 @@ fun SimpleCounter(
                         }
                 )
 
+                // show "save" & "cancel" btns if title is being edited, otherwise "delete counter" btn
                 if (isTitleInEdit) {
+                    // save btn
                     IconButton(onClick = {
                         onTitleChanged(counter, titleText)
                         focusManager.clearFocus()
@@ -68,6 +78,7 @@ fun SimpleCounter(
                             contentDescription = stringResource(id = R.string.cd_save)
                         )
                     }
+                    // cancel edit btn
                     IconButton(onClick = {
                         titleText = counter.title
                         focusManager.clearFocus()
@@ -78,6 +89,7 @@ fun SimpleCounter(
                         )
                     }
                 } else
+                    // delete counter btn
                     IconButton(onClick = { onCounterRemoved(counter.id) }) {
                         Icon(
                             imageVector = Icons.Outlined.Delete,
