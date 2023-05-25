@@ -38,13 +38,13 @@ class MainActivity : ComponentActivity() {
             val isNewCounterDialogOpen =
                 viewModel.isNewCounterDialogOpen.collectAsStateWithLifecycle()
             MainContent(
-                counters = counters,
+                counters = counters.value,
                 onCountChanged = viewModel::onCountChanged,
                 onCounterTitleChanged = viewModel::onTitleChanged,
                 onAddNewCounter = viewModel::onAddNewCounter,
                 onCloseNewCounterDialog = viewModel::closeNewCounterDialog,
                 addCounter = viewModel::addNewCounter,
-                isNewCounterDialogOpen = isNewCounterDialogOpen,
+                isNewCounterDialogOpen = isNewCounterDialogOpen.value,
                 onCounterRemoved = viewModel::onCounterRemoved
             )
         }
@@ -54,13 +54,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 @ExperimentalMaterial3Api
 private fun MainContent(
-    counters: State<List<Counter>>,
+    counters: List<Counter>,
     onCountChanged: (counterId: Int, num: Int) -> Unit,
     onCounterTitleChanged: (counter: Counter, newTitle: String) -> Unit,
     onAddNewCounter: () -> Unit,
     onCloseNewCounterDialog: () -> Unit,
     addCounter: (title: String) -> Unit,
-    isNewCounterDialogOpen: State<Boolean>,
+    isNewCounterDialogOpen: Boolean,
     onCounterRemoved: (counterId: Int) -> Unit
 ) {
     Scaffold(
@@ -84,7 +84,7 @@ private fun MainContent(
             }
         }
     )
-    if (isNewCounterDialogOpen.value) {
+    if (isNewCounterDialogOpen) {
         TitleInputDialog(onCloseNewCounterDialog, addCounter)
     }
 }
@@ -166,7 +166,7 @@ fun AppBarActions(onAddNewCounter: () -> Unit) {
 @ExperimentalMaterial3Api
 fun CountersColumn(
     paddingValues: PaddingValues,
-    counters: State<List<Counter>>,
+    counters: List<Counter>,
     onCountChanged: (counterId: Int, num: Int) -> Unit,
     onCounterRemoved: (counterId: Int) -> Unit,
     onTitleChanged: (counter: Counter, newTitle: String) -> Unit
@@ -175,7 +175,7 @@ fun CountersColumn(
         modifier = Modifier
             .padding(paddingValues)
     ) {
-        items(counters.value) { counter ->
+        items(counters) { counter ->
             SimpleCounter(
                 counter = counter,
                 onCountChanged = onCountChanged,
@@ -207,7 +207,7 @@ fun DefaultPreview() {
     val counters = rememberSaveable { mutableStateOf(listOf<Counter>()) }
     CounterHubTheme {
         MainContent(
-            counters = counters,
+            counters = counters.value,
             onCountChanged = { _, _ -> },
             onCounterTitleChanged = { _, _ -> },
             onAddNewCounter = { isDialogOpen.value = true },
@@ -218,7 +218,7 @@ fun DefaultPreview() {
                 newCounters.add(Counter(1, it, 0))
                 counters.value = newCounters
             },
-            isNewCounterDialogOpen = isDialogOpen
+            isNewCounterDialogOpen = isDialogOpen.value
         ) {}
     }
 }
