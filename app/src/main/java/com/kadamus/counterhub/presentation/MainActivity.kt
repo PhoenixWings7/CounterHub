@@ -1,6 +1,7 @@
 package com.kadamus.counterhub.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -175,7 +176,7 @@ fun CountersColumn(
         modifier = Modifier
             .padding(paddingValues)
     ) {
-        items(counters) { counter ->
+        items(counters, key = { it.id }) { counter ->
             SimpleCounter(
                 counter = counter,
                 onCountChanged = onCountChanged,
