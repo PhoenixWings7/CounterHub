@@ -36,10 +36,11 @@ fun SimpleCounter(
     counter: Counter,
     onCountChanged: (counterId: Int, num: Int) -> Unit,
     onCounterRemoved: (counterId: Int) -> Unit,
-    onTitleChanged: (counter: Counter, newTitle: String) -> Unit
+    onTitleChanged: (counter: Counter, newTitle: String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     ElevatedCard(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
@@ -135,7 +136,7 @@ fun CounterPreview() {
         SimpleCounter(
             counter = Counter(0, "Push-ups", 3),
             onCountChanged = { _, _ -> },
-            onCounterRemoved = {}
-        ) { _, _ -> }
+            onCounterRemoved = {},
+            onTitleChanged = { _, _ -> })
     }
 }
