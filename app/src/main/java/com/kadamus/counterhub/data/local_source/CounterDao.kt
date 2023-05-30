@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CounterDao {
-    @Query("SELECT * FROM counters")
+    @Query("SELECT * FROM counters ORDER BY id DESC")
     fun getCounters(): Flow<List<Counter>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
