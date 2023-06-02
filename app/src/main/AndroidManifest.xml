@@ -25,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.settings.SettingsActivity"
+            android:theme="@style/Theme.CounterHub"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
