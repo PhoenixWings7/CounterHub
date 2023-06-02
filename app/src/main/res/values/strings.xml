@@ -7,10 +7,13 @@
     <string name="cd_decrease_counter">Decrease counter</string>
     <string name="cd_increase_counter">Increase counter</string>
     <string name="cd_save">Save</string>
+    <string name="cd_expandable_menu">Expand options</string>
+    <string name="cd_settings">Settings</string>
 
     <!--    Labels  -->
     <string name="lbl_new_counter">New counter</string>
     <string name="lbl_counter_name">Counter name</string>
+    <string name="lbl_settings">Settings</string>
 
     <!--    Buttons  -->
     <string name="btn_confirm">Confirm</string>
