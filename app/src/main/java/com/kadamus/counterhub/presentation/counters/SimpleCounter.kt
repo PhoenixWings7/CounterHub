@@ -80,18 +80,22 @@ fun SimpleCounter(
                         )
                     }
                     // cancel edit btn
-                    IconButton(onClick = {
-                        titleText = counter.title
-                        focusManager.clearFocus()
-                    }) {
+                    IconButton(
+                        modifier = Modifier.minimumInteractiveComponentSize(),
+                        onClick = {
+                            titleText = counter.title
+                            focusManager.clearFocus()
+                        }) {
                         Icon(
                             imageVector = Icons.Outlined.Close,
                             contentDescription = stringResource(id = R.string.cd_save)
                         )
                     }
                 } else
-                    // delete counter btn
-                    IconButton(onClick = { onCounterRemoved(counter.id) }) {
+                // delete counter btn
+                    IconButton(
+                        modifier = Modifier.minimumInteractiveComponentSize(),
+                        onClick = { onCounterRemoved(counter.id) }) {
                         Icon(
                             imageVector = Icons.Outlined.Delete,
                             contentDescription = stringResource(id = R.string.cd_delete_counter)
