@@ -85,7 +85,7 @@ private fun MainContent(
             TopAppBar(
                 title = { Text(text = stringResource(R.string.app_name)) },
                 actions = { AppBarActions(onAddNewCounter) },
-                colors = TopAppBarDefaults.smallTopAppBarColors()
+                colors = TopAppBarDefaults.topAppBarColors()
             )
         },
         floatingActionButton = { AddCounterFab(onAddNewCounter) },
