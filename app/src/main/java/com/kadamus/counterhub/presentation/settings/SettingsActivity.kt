@@ -17,11 +17,14 @@ class SettingsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val isChecked = viewModel.dailyReminderSetting
-                    .collectAsStateWithLifecycle(initialValue = false)
+                .collectAsStateWithLifecycle(initialValue = false)
+            val reminderTime = viewModel.dailyReminderTime
+                .collectAsStateWithLifecycle(initialValue = null)
 
             DailyReminderSetting(
                 isChecked = isChecked.value,
                 onCheckedChange = viewModel::toggleDailyReminder,
+                dailyReminderTime = reminderTime.value,
                 onTimePicked = viewModel::setDailyReminderTime
             )
         }

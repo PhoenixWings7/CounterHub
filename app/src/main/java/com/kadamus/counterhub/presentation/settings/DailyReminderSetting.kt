@@ -32,7 +32,8 @@ import com.kadamus.counterhub.R
 @ExperimentalMaterial3Api
 fun DailyReminderSetting(
     isChecked: Boolean,
-    onCheckedChange: ((Boolean) -> Unit),
+    onCheckedChange: (Boolean) -> Unit,
+    dailyReminderTime: Pair<Int, Int>?,
     onTimePicked: (hours: Int, minutes: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -71,7 +72,8 @@ fun DailyReminderSetting(
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
-                    text = "15:32",
+                    text = if (dailyReminderTime != null)
+                        "${dailyReminderTime.first}:${dailyReminderTime.second}" else "not set",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -112,8 +114,12 @@ fun DailyReminderSetting(
 @ExperimentalMaterial3Api
 fun ReminderPreview() {
     var isChecked by rememberSaveable { mutableStateOf(true) }
+    var reminderTime by rememberSaveable {
+        mutableStateOf(Pair(12, 15))
+    }
     DailyReminderSetting(
         isChecked,
         onCheckedChange = { isChecked = it },
-        onTimePicked = { _, _ -> })
+        reminderTime,
+        onTimePicked = { h, m -> reminderTime = Pair(h, m) })
 }
