@@ -14,6 +14,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
+import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
@@ -78,33 +79,47 @@ fun DailyReminderSetting(
                 )
             }
             if (isTimePickerOpen) {
-                AlertDialog(onDismissRequest = { isTimePickerOpen = false }) {
-                    ElevatedCard {
-                        TimePicker(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp), state = timePickerState
-                        )
-                        Row(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(), horizontalArrangement = Arrangement.End
-                        ) {
-                            TextButton(onClick = { isTimePickerOpen = false }) {
-                                Text(text = "Cancel")
-                            }
-                            TextButton(onClick = {
-                                onTimePicked(timePickerState.hour, timePickerState.minute)
-                                isTimePickerOpen = false
-                            }) {
-                                Text(text = "Confirm")
-                            }
-
-                        }
-                    }
-                }
+                TimePickerDialog(
+                    onCloseTimePicker = { isTimePickerOpen = false },
+                    timePickerState = timePickerState,
+                    onTimePicked = onTimePicked
+                )
             }
 
+        }
+    }
+}
+
+@ExperimentalMaterial3Api
+@Composable
+private fun TimePickerDialog(
+    onCloseTimePicker: () -> Unit,
+    timePickerState: TimePickerState,
+    onTimePicked: (hours: Int, minutes: Int) -> Unit
+) {
+    AlertDialog(onDismissRequest = { onCloseTimePicker() }) {
+        ElevatedCard {
+            TimePicker(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp), state = timePickerState
+            )
+            Row(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(), horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(onClick = { onCloseTimePicker() }) {
+                    Text(text = "Cancel")
+                }
+                TextButton(onClick = {
+                    onTimePicked(timePickerState.hour, timePickerState.minute)
+                    onCloseTimePicker()
+                }) {
+                    Text(text = "Confirm")
+                }
+
+            }
         }
     }
 }
