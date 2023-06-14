@@ -34,4 +34,8 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
+
+    fun setDailyReminderTime(hours: Int, minutes: Int) {
+        //TODO("Not yet implemented")
+    }
 }

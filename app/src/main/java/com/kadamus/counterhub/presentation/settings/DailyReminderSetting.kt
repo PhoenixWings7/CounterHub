@@ -33,10 +33,11 @@ import com.kadamus.counterhub.R
 fun DailyReminderSetting(
     isChecked: Boolean,
     onCheckedChange: ((Boolean) -> Unit),
+    onTimePicked: (hours: Int, minutes: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var isTimePickerOpen by rememberSaveable { mutableStateOf(false) }
-    val timePickerState = rememberTimePickerState()
+    val timePickerState = rememberTimePickerState(is24Hour = true)
 
     Column(
         modifier
@@ -60,7 +61,7 @@ fun DailyReminderSetting(
         if (isChecked) {
             // display the time set for the reminder
             Row(
-                modifier = Modifier.clickable { isTimePickerOpen = false },
+                modifier = Modifier.clickable { isTimePickerOpen = true },
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -87,10 +88,13 @@ fun DailyReminderSetting(
                                 .padding(8.dp)
                                 .fillMaxWidth(), horizontalArrangement = Arrangement.End
                         ) {
-                            TextButton(onClick = { /*TODO*/ }) {
+                            TextButton(onClick = { isTimePickerOpen = false }) {
                                 Text(text = "Cancel")
                             }
-                            TextButton(onClick = { /*TODO*/ }) {
+                            TextButton(onClick = {
+                                onTimePicked(timePickerState.hour, timePickerState.minute)
+                                isTimePickerOpen = false
+                            }) {
                                 Text(text = "Confirm")
                             }
 
@@ -108,5 +112,8 @@ fun DailyReminderSetting(
 @ExperimentalMaterial3Api
 fun ReminderPreview() {
     var isChecked by rememberSaveable { mutableStateOf(true) }
-    DailyReminderSetting(isChecked, onCheckedChange = { isChecked = it })
+    DailyReminderSetting(
+        isChecked,
+        onCheckedChange = { isChecked = it },
+        onTimePicked = { _, _ -> })
 }

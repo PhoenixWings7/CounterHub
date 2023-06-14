@@ -21,7 +21,8 @@ class SettingsActivity : ComponentActivity() {
 
             DailyReminderSetting(
                 isChecked = isChecked.value,
-                onCheckedChange = viewModel::toggleDailyReminder
+                onCheckedChange = viewModel::toggleDailyReminder,
+                onTimePicked = viewModel::setDailyReminderTime
             )
         }
     }
